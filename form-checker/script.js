@@ -2,7 +2,7 @@ const form = document.getElementById("form");
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
-const password2 = document.getElementById("newPassword");
+const password2 = document.getElementById("confirmPassword");
 
 function showError(input, message) {
   const formControl = input.parentElement;
@@ -59,19 +59,25 @@ function checkPasswordsMatch(input1, input2) {
   }
 }
 
+// function getFieldName(input) {
+//   return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+// }
+
 function getFieldName(input) {
-  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+  return input.id
+    .replace(/([A-Z])/g, " $1") // Add space before capital letters
+    .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
 }
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  checkRequired([username, email, password, newPassword]);
+  checkRequired([username, email, password, confirmPassword]);
   checkLength(username, 3, 15);
   checkLength(password, 6, 25);
-  checkLength(newPassword, 6, 25);
+  checkLength(confirmPassword, 6, 25);
   checkEmail(email);
-  checkPasswordsMatch(password, newPassword);
+  checkPasswordsMatch(password, confirmPassword);
 
   //   if (username.value === "") {
   //     showError(username, "Username is required");
